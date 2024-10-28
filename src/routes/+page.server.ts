@@ -1,15 +1,6 @@
 import type { PageServerLoad } from './$types'
-import {prepareHtmlRequest} from '$lib/server/extractor'
-
-
 
 export const load: PageServerLoad = async (event) => {
-    try {
-        await prepareHtmlRequest(event)
-    }
-    catch (e) {
-        console.error(e)
-    }
     let {
         httpClientHintsOptions,
         // eslint-disable-next-line prefer-const

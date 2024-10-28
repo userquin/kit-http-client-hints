@@ -7,18 +7,13 @@ import { options } from '../../http-client-hints'
 const detect: Handle = async ({ event, resolve }) => {
   const url = event.request.url
   console.log(`Requesting ${url} (data=${event.isDataRequest}) => ${options.serverImages!.some(r => url.match(r))}`)
-  return await resolve(event, {
-    transformPageChunk: async ({ html }) => {
-      console.log(`init: ${url} (data=${event.isDataRequest})`)
-      try {
-        await prepareHtmlRequest(event)
-      }
-      catch (err) {
-        console.error(err)
-      }
-      return html
-    }
-  })
+  try {
+    await prepareHtmlRequest(event)
+  }
+  catch (err) {
+    console.error(err)
+  }
+  return await resolve(event)
 }
 
 const addHeaders: Handle = async  ({ event, resolve }) => {
